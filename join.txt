@@ -1,0 +1,16 @@
+
+
+#join table L2-InteractionTweets to l3-followers for detection uniqe followers
+# DELETE NULL IN USER 2
+# DELET DUPLICATE IN TEXT 
+
+SELECT  [TwitterTweetId]
+      ,[TwitterUserId]
+      ,[ScreenName]
+      ,[CreatedAt]
+      ,[Text]
+	  ,[L3-followers].user2
+	  FROM [Twitter-ph1].[dbo].[L2-InteractionTweets]  LEFT JOIN  dbo.[L3-followers] ON  [dbo].[L2-InteractionTweets].ScreenName = dbo.[L3-followers].user2 
+	  WHERE user2 IS NOT NULL 
+  DELETE FROM dbo.[L2-InteractionTweets] WHERE CreatedAt IN (SELECT CreatedAt FROM dbo.[L2-InteractionTweets] GROUP BY CreatedAt HAVING COUNT(*)>1)
+  
